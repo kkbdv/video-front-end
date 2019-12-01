@@ -67,7 +67,10 @@ Page({
                 url: redirectUrl,
               })
             } else {
-              wx.redirectTo({
+              // wx.redirectTo({
+              //   url: '../mine/mine',
+              // })
+              wx.switchTab({
                 url: '../mine/mine',
               })
             }
@@ -75,9 +78,9 @@ Page({
           } else if (res.data.code == 200) {
             // 失败弹出框
             wx.showToast({
-              title: res.data.msg,
+              title: res.data.message,
               icon: 'none',
-              duration: 3000
+              duration: 2000
             })
           }
         }

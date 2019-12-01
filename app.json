@@ -1,9 +1,16 @@
 {
   "pages": [
-    
+    "pages/index/index",
+    "pages/indexSearch/index",
+    "pages/videoinfo/videoinfo",
+    "pages/forum/forum",
     "pages/userLogin/login",
-    "pages/mine/mine"
-    ,"pages/userRegist/regist"
+    "pages/mine/mine",
+    "pages/mineNavigate/mine",
+    "pages/chooseBgm/chooseBgm",
+    "pages/userRegist/regist",
+    "pages/report/report",
+    "pages/searchVideo/searchVideo"
     
     
     
@@ -13,6 +20,18 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "高校分享",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "视频首页"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

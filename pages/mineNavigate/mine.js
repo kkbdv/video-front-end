@@ -190,7 +190,7 @@ Page({
     var me = this;
     wx.chooseImage({
       count: 1,
-      sizeType: ['compressed','original'],
+      sizeType: ['compressed'],
       sourceType: ['album'],
       success: function (res) {
         var tempFilePaths = res.tempFilePaths;
@@ -545,46 +545,6 @@ Page({
     }
 
   },
-  longPressDelete:function(e){
-    var me = this;
-    var videoIndex = e.currentTarget.dataset.arrindex;
-    var video =  me.data.myVideoList[videoIndex];
-    var serverUrl = app.serverUrl;
-    if (me.data.isMe==false){
-      return;
-    }
+  
 
-    wx.showModal({
-      title: '提示',
-      content: '确定删除视频吗?',
-      success:function(res){
-        if(res.confirm==true){
-          wx.showLoading({
-            title: '正在删除...',
-          });
-          wx.request({
-            url: serverUrl + '/video/delete?videoId=' + video.id,
-            method:'POST',
-            data:{
-              videoPath: video.videoPath,
-              coverPath: video.coverPath
-            },
-            success:function(res){
-             wx.hideLoading();
-             wx.showToast({
-               title: '删除成功',
-               duration:2000,
-               icon:'none'
-             }) ,
-             me.setData({
-               myVideoList:[]
-             })
-              me.getMyVideoList(1);
-            }
-          })
-        }
-      }
-    })
-  },
- 
 })

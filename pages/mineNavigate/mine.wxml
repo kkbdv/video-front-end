@@ -48,7 +48,7 @@
 
 <view hidden='{{myWorkFalg}}'>
     <block wx:for="{{myVideoList}}" >
-        <image src='{{serverUrl}}{{item.coverPath}}' class='videoImage' mode="aspectFill" bindtap='showVideo' data-arrindex='{{index}}'bindlongpress="longPressDelete" ></image>
+        <image src='{{serverUrl}}{{item.coverPath}}' class='videoImage' mode="aspectFill" bindtap='showVideo' data-arrindex='{{index}}' ></image>
     </block>
 </view>
 
