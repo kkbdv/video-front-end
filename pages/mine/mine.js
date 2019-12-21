@@ -13,6 +13,7 @@ Page({
     isSelectedWork: "video-info-selected",
     isSelectedLike: "",
     isSelectedFollow: "",
+    isSelectedForum:"",
 
     myVideoList: [],
     myVideoPage: 1,
@@ -26,9 +27,14 @@ Page({
     followVideoPage: 1,
     followVideoTotal: 1,
 
+    forumList:[],
+    forumPage:1,
+    forumTotal:1,
+
     myWorkFalg: false,
     myLikesFalg: true,
-    myFollowFalg: true
+    myFollowFalg: true,
+    myForumFlag:true
 
   },
 
@@ -306,10 +312,12 @@ Page({
       isSelectedWork: "video-info-selected",
       isSelectedLike: "",
       isSelectedFollow: "",
+      isSelectedForum: "",
 
       myWorkFalg: false,
       myLikesFalg: true,
       myFollowFalg: true,
+      myForumFlag: true,
 
       myVideoList: [],
       myVideoPage: 1,
@@ -321,7 +329,11 @@ Page({
 
       followVideoList: [],
       followVideoPage: 1,
-      followVideoTotal: 1
+      followVideoTotal: 1,
+
+      forumList: [],
+      forumPage: 1,
+      forumTotal: 1
     });
 
     this.getMyVideoList(1);
@@ -332,10 +344,12 @@ Page({
       isSelectedWork: "",
       isSelectedLike: "video-info-selected",
       isSelectedFollow: "",
+      isSelectedForum: "",
 
       myWorkFalg: true,
       myLikesFalg: false,
       myFollowFalg: true,
+      myForumFlag: true,
 
       myVideoList: [],
       myVideoPage: 1,
@@ -347,7 +361,11 @@ Page({
 
       followVideoList: [],
       followVideoPage: 1,
-      followVideoTotal: 1
+      followVideoTotal: 1,
+      
+      forumList: [],
+      forumPage: 1,
+      forumTotal: 1
     });
 
     this.getMyLikesList(1);
@@ -358,10 +376,12 @@ Page({
       isSelectedWork: "",
       isSelectedLike: "",
       isSelectedFollow: "video-info-selected",
+      isSelectedForum:"",
 
       myWorkFalg: true,
       myLikesFalg: true,
       myFollowFalg: false,
+      myForumFlag:true,
 
       myVideoList: [],
       myVideoPage: 1,
@@ -373,10 +393,76 @@ Page({
 
       followVideoList: [],
       followVideoPage: 1,
-      followVideoTotal: 1
+      followVideoTotal: 1,
+      
+      forumList: [],
+      forumPage: 1,
+      forumTotal: 1
     });
 
     this.getMyFollowList(1)
+  },
+
+  //讲座选择事件
+  doSelectForum:function(){
+    this.setData({
+      isSelectedWork: "",
+      isSelectedLike: "",
+      isSelectedFollow: "",
+      isSelectedForum:"video-info-selected",
+
+      myWorkFalg: true,
+      myLikesFalg: true,
+      myFollowFalg: true,
+      myForumFlag:false,
+
+      myVideoList: [],
+      myVideoPage: 1,
+      myVideoTotal: 1,
+
+      likeVideoList: [],
+      likeVideoPage: 1,
+      likeVideoTotal: 1,
+
+      followVideoList: [],
+      followVideoPage: 1,
+      followVideoTotal: 1,
+
+      forumList: [],
+      forumPage:1,
+      forumTotal:1,
+
+      status: ["red", "green", "grey"],
+      statusDesc: ["未开始", "正在进行...", "已结束"]
+    })
+    this.getMyFormList(1);
+  },
+
+  getMyFormList:function(page){
+    var me = this;
+    wx.showLoading({
+      title: '加载中...',
+    })
+    var serverUrl = app.serverUrl;
+    var userInfo = app.getGlobalUserInfo();
+    wx.request({
+      url: serverUrl +'/forum/getMyForum?userId='+userInfo.id+"&page="+page,
+      method:"POST",
+      header:{
+        'headerUserId': userInfo.id,
+        'headerUserToken': userInfo.userToken
+      },
+      success:function(res){
+        wx.hideLoading();
+        var newList = res.data.data.rows;
+        var list = me.data.forumList;
+        me.setData({
+          forumList:list.concat(newList),
+          forumPage:res.data.data.page,
+          forumTotal:res.data.data.total
+        })
+      }
+    })
   },
 
   getMyVideoList: function (page) {
@@ -410,6 +496,13 @@ Page({
       }
     })
   },
+  //跳转到发布讲座
+  toAddForum:function(){
+    wx.navigateTo({
+      url: '../addForum/addForum',
+    })
+  },
+
 
   getMyLikesList: function (page) {
     var me = this;
@@ -502,6 +595,7 @@ Page({
     var myWorkFalg = this.data.myWorkFalg;
     var myLikesFalg = this.data.myLikesFalg;
     var myFollowFalg = this.data.myFollowFalg;
+    var myForumFlag = this.data.myForumFlag;
 
     if (!myWorkFalg) {
       var currentPage = this.data.myVideoPage;
@@ -542,6 +636,18 @@ Page({
       }
       var page = currentPage + 1;
       this.getMyFollowList(page);
+    }else if(!myForumFlag){
+      var currentPage = this.data.forumPage;
+      var totalPage = this.data.forumTotal;
+      if(currentPage==totalPage){
+        wx.showToast({
+          title: '已经没有了',
+          icon:"none"
+        })
+        return;
+      }
+      var page = currentPage+1
+      this.getMyFormList(page)
     }
 
   },
@@ -586,5 +692,48 @@ Page({
       }
     })
   },
+  deleteForum:function(e){
+    var me = this
+    var serverUrl = me.data.serverUrl
+    var index = e.currentTarget.dataset.delindex;
+    var forum = me.data.forumList[index];
+
+    wx.showModal({
+      title: '提示',
+      content: '确定删除活动吗?',
+      success: function (res) {
+        if (res.confirm == true) {
+          wx.showLoading({
+            title: '正在删除...',
+          });
+          wx.request({
+            url: serverUrl + '/forum/delete?forumId=' + forum.id,
+            method: 'POST',
+            data: {
+              forumCoverpath: forum.forumCoverpath
+            },
+            success: function (res) {
+              wx.hideLoading();
+              wx.showToast({
+                title: '删除成功',
+                duration: 2000,
+                icon: 'none'
+              }),
+                me.setData({
+                forumList: []
+                })
+              me.getMyFormList(1);
+            }
+          })
+        }
+      }
+    })
+  },
+  toDetail:function(e){
+    var forumId = e.currentTarget.dataset.arrindex
+    wx.navigateTo({
+      url: '../foruminfo/foruminfo?forumId=' + forumId+"&isMine="+1,
+    })
+  }
  
 })

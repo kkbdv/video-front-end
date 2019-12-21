@@ -11,7 +11,7 @@
   list-style-type: none
 } */
 .cardContent .detail{
-  width:50%;height:83%;background:#FFFFFF;font-size:13px;line-height: 30px;
+  width:50%;height:83%;background:#FFFFFF;font-size:13px;line-height: 22px;
 }
 
 .blockStart{

@@ -1,0 +1,15 @@
+<!--pages/tips/tips.wxml-->
+<view>
+  <text>引导页面演示.....</text>
+</view>
+<view>
+  <text>欢迎使用知识反刍系统！</text>
+</view>
+<view>
+  <text>在这里，你可以发表你的见解，分享你的讲桌!</text>
+</view>
+<view>
+  <text>请遵纪守法，发表文明评论</text>
+</view>
+
+<button type="primary" bindtap="sure" class='btnPositon'>确定</button>

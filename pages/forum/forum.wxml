@@ -1,18 +1,19 @@
 <view style="background:#696969;height:{{screenHeight}}px;"> 
   <view style="height:20px"></view>
   <!--block start-->
-  <view class="blockStart" bindtap="toDetail" wx:for="{{forumList}}" >
+  <view class="blockStart" bindtap="toDetail" wx:for="{{forumList}}" data-arrindex="{{item.id}}">
   <!--status-->
   <view class="status">
-    <view style="background:{{status}};" class="dot"></view>
-    <text style="font-size:13px">{{statusDesc}}</text>
+    <view style="background:{{status[item.status]}};" class="dot"></view>
+    <text style="font-size:13px">{{statusDesc[item.status]}}</text>
   </view>
   <view class="cardContent"> 
-    <image src="http://localhost:8081/1911227SR11GYGF8/video/wx9f445de8447b3aa0o6zAJs2s6nOObfqTr3oNVQUFR_eIarZvQ5LgugS2347af1e5199e9e10b326e03b57843f8c.jpg" style="width:30%;height:55%;"  mode="aspectFill"></image>
+    <image src='{{serverUrl}}{{item.forumCoverpath}}' style="width:30%;height:55%;"  mode="aspectFill"></image>
     <view class="detail" >
-      <view>主题: 摄影技术</view>
-      <view>地点: 9-101</view>
-      <view>时间: 2:30 pm</view>
+      <view>主题: {{item.forumTitle}}</view>
+      <view>地点: {{item.forumAddress}}</view>
+      <view>日期: {{item.forumDate}}</view>
+      <view>时间: {{item.forumStart}} - {{item.endTime}}</view>
     </view> 
   </view>
   <!--click to detail-->

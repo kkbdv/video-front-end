@@ -1,0 +1,14 @@
+/* pages/addForum/addForum.wxss */
+@import '../chooseBgm/chooseBgm.wxss';
+
+.addCover{
+  height: 120px;
+  width: 120px;
+}
+
+.inputView2 {
+    padding: 5px;
+    background-color: white;
+    line-height: 45px;
+    border: solid 1px whitesmoke;
+}

@@ -1,0 +1,6 @@
+/* pages/tips/tips.wxss */
+.btnPositon{
+  position: fixed;
+  bottom: 65px;
+  left: 25%;
+}

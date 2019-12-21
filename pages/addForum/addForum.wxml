@@ -1,0 +1,44 @@
+<form bindsubmit='upload'>
+        <view class="inputView">
+            <label class="loginLabel">标题：</label>
+            <input name="title" class="inputText" value="摄影技术" placeholder="说点什么吧" />
+        </view>
+        <view class="inputView">
+            <label class="loginLabel">地点：</label>
+            <input name="address" class="inputText" value="工一201" placeholder="说点什么吧" />
+        </view>
+        <view class="inputView2">
+            <label class="loginLabel">快速描述：</label>
+            <input name="desc" class="inputText" value="感兴趣的朋友来啊" placeholder="说点什么吧" />
+        </view>
+        <view class="inputView">
+            <picker mode="date" value="{{date}}" start="{{initDate}}"  bindchange="bindDateChange">
+              <view class="picker">
+                选择日期: {{date}}
+              </view>
+             </picker>
+        </view>
+        <view class="inputView">
+            <picker mode="time" value="{{time}}" start="{{initTime}}" bindchange="bindTimeChange">
+              <view class="picker">
+                开始时间: {{startTime}}
+              </view>
+            </picker>
+        </view>
+        <view class="inputView">
+            <picker bindchange="bindPickerChange" value="{{index}}" range="{{timeArry}}" range-key="label" bindchange="bingTimeLong">
+              <view class="picker">
+                讲座时长：{{duration}}
+              </view>
+            </picker>
+        </view>
+        <view class="inputView">
+         <label class="loginLabel">添加图片:</label>
+          <image src="{{addUrl}}" class="addCover" bindtap='addCover'></image>
+        </view>
+        
+        <!-- 提交 -->
+        <button class="submitBtn" type="primary" form-type='submit'>发布</button>
+        
+        <button class="gobackBtn" type="warn" form-type='reset'>重置</button>
+    </form>

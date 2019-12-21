@@ -1,6 +1,22 @@
-#这个版本为测版本 版本号:bishe3
+#这个版本为测版本 版本号:bishe4
 
-bishe3
-完成大部分功能，未细节优化
-下个版本添加 邀约功能
+bishe4
 
+完成邀约功能，准备细化界面。
+
+ // "tabBar": {
+  //   "list": [
+  //     {
+  //       "pagePath": "pages/index/index",
+  //       "text": "视频首页"
+  //     },
+  //     {
+  //       "pagePath": "pages/forum/forum",
+  //       "text": "线下分享"
+  //     },
+  //     {
+  //       "pagePath": "pages/mine/mine",
+  //       "text": "我的"
+  //     }
+  //   ]
+  // },
